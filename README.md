@@ -31,5 +31,3 @@ Please ensure you test these rules prior to pushing them into production. This r
 
 ## TODO
 - [ ] Increase MITRE ATT&CK coverage
-- [ ] Test rules across multiple flavors of Linux
-- [ ] Determine performance impacts of the ruleset
