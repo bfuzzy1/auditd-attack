@@ -214,6 +214,7 @@
 -w /bin/su -p x -k T1169_Sudo
 -w /usr/bin/sudo -p x -k T1169_Sudo
 -w /etc/sudoers -p rw -k T1169_Sudo
+-a always,exit -S setresuid -F a0=0 -F exe=/usr/bin/sudo -k T1169_Sudo
 -a always,exit -F dir=/home -F uid=0 -F auid>=1000 -F auid!=4294967295 -C auid!=obj_uid -k T1169_Sudo
 -a always,exit -F arch=b32 -S chmod -F auid>=500 -F auid!=4294967295 -k T1166_Seuid_and_Setgid
 -a always,exit -F arch=b32 -S chown -F auid>=500 -F auid!=4294967295 -k T1166_Seuid_and_Setgid
