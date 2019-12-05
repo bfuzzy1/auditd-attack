@@ -91,6 +91,8 @@
 -a always,exit -F perm=x -F auid!=-1 -F path=/sbin/rmmod -k T1215_Kernel_Modules_and_Extensions
 -a always,exit -F arch=b64 -S finit_module -S init_module -S delete_module -F auid!=-1 -k T1215_Kernel_Modules_and_Extensions
 -a always,exit -F arch=b32 -S finit_module -S init_module -S delete_module -F auid!=-1 -k T1215_Kernel_Modules_and_Extensions
+-a always,exit -F arch=b64 -S kexec_load -k 	T1014_Rootkit
+-a always,exit -F arch=b32 -S sys_kexec_load -k T1014_Rootkit
 -w /etc/modprobe.conf -p wa -k T1215_Kernel_Modules_and_Extensions
 
 ## Time Related Events
@@ -120,6 +122,7 @@
 -w /etc/inittab -p wa -k T1168_Local_Job_Scheduling
 -w /etc/init.d/ -p wa -k T1168_Local_Job_Scheduling
 -w /etc/init/ -p wa -k T1168_Local_Job_Scheduling
+-w /sbin/init -k T1168_Local_Job_Scheduling_In_Memory
 -w /etc/at.allow -p wa -k T1168_Local_Job_Scheduling
 -w /etc/at.deny -p wa -k T1168_Local_Job_Scheduling
 -w /var/spool/at/ -p wa -k T1168_Local_Job_Scheduling
@@ -254,7 +257,15 @@
 -a always,exit -F arch=b32 -S setuid -S setgid -S setreuid -S setregid -k T1166_Seuid_and_Setgid
 -a always,exit -F arch=b64 -S setuid -S setgid -S setreuid -S setregid -F exit=EPERM -k T1166_Seuid_and_Setgid
 -a always,exit -F arch=b32 -S setuid -S setgid -S setreuid -S setregid -F exit=EPERM -k T1166_Seuid_and_Setgid
- -w /usr/bin/ -p wa -k T1068_Exploitation_for_Privilege_Escalation
+ #-w /usr/bin/ -p wa -k T1068_Exploitation_for_Privilege_Escalation
+ -a exit,always -F arch=b64 -S open -F dir=/etc -F success=0 -k T1068_Exploitation_for_Privilege_Escalation
+-a exit,always -F arch=b64 -S open -F dir=/bin -F success=0 -k T1068_Exploitation_for_Privilege_Escalation
+-a exit,always -F arch=b64 -S open -F dir=/sbin -F success=0 -k T1068_Exploitation_for_Privilege_Escalation
+-a exit,always -F arch=b64 -S open -F dir=/usr/bin -F success=0 -k T1068_Exploitation_for_Privilege_Escalation
+-a exit,always -F arch=b64 -S open -F dir=/usr/sbin -F success=0 -k T1068_Exploitation_for_Privilege_Escalation
+-a exit,always -F arch=b64 -S open -F dir=/var -F success=0 -k T1068_Exploitation_for_Privilege_Escalation
+-a exit,always -F arch=b64 -S open -F dir=/home -F success=0 -k T1068_Exploitation_for_Privilege_Escalation
+-a exit,always -F arch=b64 -S open -F dir=/srv -F success=0 -k T1068_Exploitation_for_Privilege_Escalation
 
 ## Recon Related Events
 -w /etc/group -p wa -k T1087_Account_Discovery
@@ -293,6 +304,7 @@
 -w /usr/bin/curl -p x -k T1219_Remote_Access_Tools
 -w /usr/bin/base64 -p x -k T1219_Remote_Access_Tools
 -w /bin/nc -p x -k T1219_Remote_Access_Tools
+-w /bin/nc.traditional -p x -k T1219_Remote_Access_Tools
 -w /bin/netcat -p x -k T1219_Remote_Access_Tools
 -w /usr/bin/ncat -p x -k T1219_Remote_Access_Tools
 -w /usr/bin/ssh -p x -k T1219_Remote_Access_Tools
