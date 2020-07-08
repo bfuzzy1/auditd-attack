@@ -1,7 +1,5 @@
 # auditd-attack
 # A Linux Auditd configuration mapped to MITRE's Attack Framework
-# Most of my inspiration came from various individuals so I wont name them all, but you're work does not go 
-# unnoticed!
 
 ### Special Thanks To
 
@@ -43,44 +41,6 @@
 ## Monitor for use of audit management tools
 -w /sbin/auditctl -p x -k audittools
 -w /sbin/auditd -p x -k audittools
-
-# Filters ---------------------------------------------------------------------
-
-### We put these early because audit is a first match wins system.
-
-## Ignore SELinux AVC records
-##-a always,exclude -F msgtype=AVC
-
-## Ignore current working directory records
--a always,exclude -F msgtype=CWD
-
-## Ignore EOE records (End Of Event, not needed)
--a always,exclude -F msgtype=EOE
-
-## Cron jobs fill the logs with stuff we normally don't want (works with SELinux)
--a never,user -F subj_type=crond_t
--a exit,never -F subj_type=crond_t
-
-## This prevents chrony from overwhelming the logs
-##-a never,exit -F arch=b64 -S adjtimex -F auid=unset -F uid=chrony -F subj_type=chronyd_t
-
-## This is not very interesting and wastes a lot of space if the server is public facing
--a always,exclude -F msgtype=CRYPTO_KEY_USER
-
-## VMWare tools (Comment out lines 75 and 76 if they are not needed)
--a exit,never -F arch=b32 -S fork -F success=0 -F path=/usr/lib/vmware-tools -F subj_type=initrc_t -F exit=-2
--a exit,never -F arch=b64 -S fork -F success=0 -F path=/usr/lib/vmware-tools -F subj_type=initrc_t -F exit=-2
-
-## CentOS
--a exit,never -F arch=b32 -S fork -F success=0 -F path=/etc/vmware-tools -F subj_type=initrc_t -F exit=-2
--a exit,never -F arch=b64 -S fork -F success=0 -F path=/etc/vmware-tools -F subj_type=initrc_t -F exit=-2
-
-### High Volume Event Filter (especially on Linux Workstations)
--a exit,never -F arch=b32 -F dir=/dev/shm -k sharedmemaccess
--a exit,never -F arch=b64 -F dir=/dev/shm -k sharedmemaccess
--a exit,never -F arch=b32 -F dir=/var/lock/lvm -k locklvm
--a exit,never -F arch=b64 -F dir=/var/lock/lvm -k locklvm
-
 
 # Rules -----------------------------------------------------------------------
 
