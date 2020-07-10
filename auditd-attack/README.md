@@ -27,9 +27,3 @@ Please ensure you test these rules prior to pushing them into production. This r
 [auditdBroFramework](https://github.com/set-element/auditdBroFramework/blob/master/system_config/audit.rules)
 
 [@MITREattack](https://twitter.com/MITREattack)
-
-
-## TODO
-- [ ] Increase MITRE ATT&CK coverage
-- [ ] Test rules across multiple flavors of Linux
-- [ ] Determine performance impacts of the ruleset
