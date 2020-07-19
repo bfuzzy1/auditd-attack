@@ -169,9 +169,6 @@
 -w /etc/security/namespace.init -p wa -k T1071_Standard_Application_Layer_Protocol
 -w /etc/pam.d/common-password -p wa -k T1201_Password_Policy_Discovery
 
-## SSH Related Events
--w /etc/ssh/sshd_config -k T1021_Remote_Services
-
 ##C2 Releated Events
 #Log 64 bit processes (a2!=6e filters local unix socket calls)
 -a exit,always -F arch=b64 -S connect -F a2!=110 -k T1043_Commonly_Used_Port
@@ -183,6 +180,7 @@
 -w /bin/su -p x -k T1169_Sudo
 -w /usr/bin/sudo -p x -k T1169_Sudo
 -w /etc/sudoers -p rw -k T1169_Sudo
+-w /etc/ssh/sshd_config -p w -k T1098.004_SSH_Authorized_Keys
 -a always,exit -S setresuid -F a0=0 -F exe=/usr/bin/sudo -k T1169_Sudo
 -a always,exit -F dir=/home -F uid=0 -F auid>=1000 -F auid!=4294967295 -C auid!=obj_uid -k T1169_Sudo
 -a always,exit -F arch=b32 -S chmod -F auid>=500 -F auid!=4294967295 -k T1166_Seuid_and_Setgid
