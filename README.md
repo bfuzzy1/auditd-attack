@@ -7,9 +7,6 @@ A Linux Auditd rule set mapped to MITRE's Attack Framework
 
 Please ensure you test these rules prior to pushing them into production. This rule set is NOT meant to have all of its rules enabled all at once (although that'd be ideal) it is setup to serve as guidance toward increasing detection/hunting coverage. 
 
-## WIKI
-
-[WIKI](https://github.com/bfuzzy/auditd-attack/wiki/Audit-Event-Fields)
 
 
 ## Special Thanks To:
