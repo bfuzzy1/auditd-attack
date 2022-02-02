@@ -141,6 +141,8 @@
 -w /usr/sbin/useradd -p x -k T1078.003_6
 -w /usr/sbin/usermod -p x -k T1078.003_7
 -w /usr/sbin/adduser -p x -k T1078.003_8
+-w /usr/bin/realm -p x -k T1136.002_1
+-w /usr/sbin/realm -p x -k T1136.002_2
 
 ## Privleged Command Execution Related Events
 -a exit,always -F arch=b64 -F euid=0 -F auid!=4294967295 -S execve -k T1078.003_9
@@ -279,6 +281,9 @@
 -a exit,always -F arch=b64 -S open -F dir=/var -F success=0 -k T1068_6
 -a exit,always -F arch=b64 -S open -F dir=/home -F success=0 -k T1068_7
 -a exit,always -F arch=b64 -S open -F dir=/srv -F success=0 -k T1068_8
+-w /usr/bin/dbus-send -p x -k T1068_CVE_2021_3560
+-w /usr/bin/pkexec -p x -k T1068_CVE_2021_4034
+
 
 ## Recon Related Events
 -w /etc/group -p wa -k T1087.001_1
@@ -288,6 +293,7 @@
 -w /etc/security/opasswd -k T1087.001_5
 -w /usr/sbin/nologin -k T1087.001_6
 -w /sbin/nologin -k T1087.001_7
+-w /usr/bin/ldapsearch -p x -k T1087.002_1
 -w /usr/bin/whoami -p x -k T1033
 -w /etc/hostname -p r -k T1082_1
 -w /sbin/iptables -p x -k T1082_2
@@ -301,32 +307,66 @@
 -w /var/log/faillog -p wa -k T1082_6
 -w /var/log/lastlog -p wa -k T1082_7
 -w /var/log/tallylog -p wa -k T1082_8
+-w /sbin/xtables-nft-multi -p x -k T1082_9
 -w /usr/sbin/tcpdump -p x -k T1049_1
 -w /usr/sbin/traceroute -p x -k T1049_2
 -w /usr/bin/wireshark -p x -k T1049_3
 -w /usr/bin/rawshark -p x -k T1049_4
--w /usr/bin/grep -p x -k T1552.001
--w /usr/bin/egrep -p x -k T1552.001
+-w /usr/bin/grep -p x -k T1552.001_1
+-w /usr/bin/egrep -p x -k T1552.001_2
 #-w /usr/bin/ps -p x -k T1057_1
 #-w /bin/ps -p x -k T1057_2
 -a always,exit -F path=/usr/bin/ps -F perm=x -k T1057_1
 -a always,exit -F exe=/bin/ps -F perm=x -k T1057_2
+-w /usr/bin/showmount -p x -k T1135_1
+-w /usr/bin/exportfs -p x -k T1135_2
+-w /usr/bin/nmblookup -p x -k T1135_3
+-w /usr/sbin/showmount -p x -k T1135_4
+-w /usr/sbin/exportfs -p x -k T1135_5
+-w /usr/sbin/nmblookup -p x -k T1135_6
+-w /etc/exports -p wa -k T1135_7
+-w /etc/fstab -p wa -k T1135_8
+-w /usr/bin/ufw -p x -k T1518.001_1
+-w /usr/bin/pfctl -p x -k T1518.001_2
+-w /usr/bin/pf -p x -k T1518.001_3
+-w /usr/bin/getenforce -p x -k T1518.001_4
+-w /usr/sbin/ufw -p x -k T1518.001_5
+-w /usr/sbin/pfctl -p x -k T1518.001_6
+-w /usr/sbin/pf -p x -k T1518.001_7
+-w /usr/sbin/getenforce -p x -k T1518.001_8
 
 ## Data Copy(Local)
 -w /usr/bin/cp -p x -k T1005_1
 -w /usr/bin/dd -p x -k T1005_2
+-w /usr/bin/mv -p x -k T1005_3
+
+## Deobfuscate/Decode Data
+-w /usr/bin/certutil -p x -k T1140_1
+-w /usr/bin/unzip -p x -k Deobfuscate_T1140
+-w /usr/bin/base64 -p x -k Deobfuscate_T1140
+-w /usr/bin/openssl -p x -k Deobfuscate_T1140
+
+## Data Compressed
+-w /usr/bin/zip -p x -k T1002_1
+-w /usr/bin/gzip -p x -k T1002_2
+-w /usr/bin/tar -p x -k T1002_3
 
 ## Remote Access Related Events
 -w /usr/bin/wget -p x -k T1219_1
 -w /usr/bin/curl -p x -k T1219_2
--w /usr/bin/base64 -p x -k T1219_3
--w /bin/nc -p x -k T1219_4
--w /bin/nc.traditional -p x -k T1219_5
--w /bin/netcat -p x -k T1219_6
--w /usr/bin/ncat -p x -k T1219_7
--w /usr/bin/ssh -p x -k T1219_8
--w /usr/bin/socat -p x -k T1219_9
--w /usr/bin/rdesktop -p x -k T1219_10
+-w /bin/nc -p x -k T1219_3
+-w /bin/nc.traditional -p x -k T1219_4
+-w /bin/netcat -p x -k T1219_5
+-w /usr/bin/ncat -p x -k T1219_6
+-w /usr/bin/ssh -p x -k T1219_7
+-w /usr/bin/socat -p x -k T1219_8
+-w /usr/bin/rdesktop -p x -k T1219_9
+-w /bin/nc.openbsd -p x -k T1219_10
+-w /usr/bin/teamviewer -p x -k T1219_11
+-w /usr/bin/LogMein -p x -k T1219_12
+
+## Pre-OS Boot
+-w /boot/grub2/grub.cfg -p wa -k T1542.003_1
 
 ##Third Party Software
 # RPM (Redhat/CentOS)
