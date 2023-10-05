@@ -340,6 +340,16 @@
 -w /usr/bin/dd -p x -k T1005_2
 -w /usr/bin/mv -p x -k T1005_3
 
+## Indicator Removal
+-a always,exit -F arch=b32 -S execve -S execveat -F exe=/usr/bin/shred -F -k T1070.004
+-a always,exit -F arch=b64 -S execve -S execveat -F exe=/usr/bin/shred -F -k T1070.004
+-a always,exit -F arch=b32 -S execve -S execveat -F exe=/usr/bin/wipe -F -k T1070.004
+-a always,exit -F arch=b64 -S execve -S execveat -F exe=/usr/bin/wipe -F -k T1070.004
+-a always,exit -F arch=b32 -S execve -S execveat -F exe=/usr/bin/scrub -F -k T1070.004
+-a always,exit -F arch=b64 -S execve -S execveat -F exe=/usr/bin/scrub -F -k T1070.004
+-a always,exit -F arch=b32 -S execve -S execveat -F exe=/usr/bin/dd -F -k T1070.004
+-a always,exit -F arch=b64 -S execve -S execveat -F exe=/usr/bin/dd -F -k T1070.004
+
 ## Deobfuscate/Decode Data
 -w /usr/bin/certutil -p x -k T1140_1
 -w /usr/bin/unzip -p x -k Deobfuscate_T1140
