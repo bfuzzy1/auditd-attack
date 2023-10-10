@@ -341,14 +341,18 @@
 -w /usr/bin/mv -p x -k T1005_3
 
 ## Indicator Removal
--a always,exit -F arch=b32 -S execve -S execveat -F exe=/usr/bin/shred -F -k T1070.004
--a always,exit -F arch=b64 -S execve -S execveat -F exe=/usr/bin/shred -F -k T1070.004
--a always,exit -F arch=b32 -S execve -S execveat -F exe=/usr/bin/wipe -F -k T1070.004
--a always,exit -F arch=b64 -S execve -S execveat -F exe=/usr/bin/wipe -F -k T1070.004
--a always,exit -F arch=b32 -S execve -S execveat -F exe=/usr/bin/scrub -F -k T1070.004
--a always,exit -F arch=b64 -S execve -S execveat -F exe=/usr/bin/scrub -F -k T1070.004
--a always,exit -F arch=b32 -S execve -S execveat -F exe=/usr/bin/dd -F -k T1070.004
--a always,exit -F arch=b64 -S execve -S execveat -F exe=/usr/bin/dd -F -k T1070.004
+-a always,exit -F arch=b32 -S execve -S execveat -F exe=/usr/bin/shred -F -k T1070.004_1
+-a always,exit -F arch=b64 -S execve -S execveat -F exe=/usr/bin/shred -F -k T1070.004_2
+-a always,exit -F arch=b32 -S execve -S execveat -F exe=/usr/bin/wipe -F -k T1070.004_3
+-a always,exit -F arch=b64 -S execve -S execveat -F exe=/usr/bin/wipe -F -k T1070.004_4
+-a always,exit -F arch=b32 -S execve -S execveat -F exe=/usr/bin/scrub -F -k T1070.004_5
+-a always,exit -F arch=b64 -S execve -S execveat -F exe=/usr/bin/scrub -F -k T1070.004_6
+-a always,exit -F arch=b32 -S execve -S execveat -F exe=/usr/bin/dd -F -k T1070.004_7
+-a always,exit -F arch=b64 -S execve -S execveat -F exe=/usr/bin/dd -F -k T1070.004_8
+-a always,exit -F arch=b32 -S rmdir -S unlink -S unlinkat -S rename -S renameat -F "auid>=500" -F auid!=4294967295 -k T1070.004_9
+-a always,exit -F arch=b64 -S rmdir -S unlink -S unlinkat -S rename -S renameat -F "auid>=500" -F auid!=4294967295 -k T1070.004_10
+-a always,exit -F arch=b32 -S rmdir -S unlink -S unlinkat -S rename -S renameat -F auid=0 -k T1070.004_11
+-a always,exit -F arch=b64 -S rmdir -S unlink -S unlinkat -S rename -S renameat -F auid=0 -k T1070.004_12
 
 ## Deobfuscate/Decode Data
 -w /usr/bin/certutil -p x -k T1140_1
@@ -425,12 +429,6 @@
 
 #Remote File Copy
 -w /usr/bin/ftp -p x -k T1105
-
-## File Deletion by User Related Events
--a always,exit -F arch=b32 -S rmdir -S unlink -S unlinkat -S rename -S renameat -F "auid>=500" -F auid!=4294967295 -k T1070.004_1
--a always,exit -F arch=b64 -S rmdir -S unlink -S unlinkat -S rename -S renameat -F "auid>=500" -F auid!=4294967295 -k T1070.004_2
--a always,exit -F arch=b32 -S rmdir -S unlink -S unlinkat -S rename -S renameat -F auid=0 -k T1070.004_3
--a always,exit -F arch=b64 -S rmdir -S unlink -S unlinkat -S rename -S renameat -F auid=0 -k T1070.004_4
 
 # Make the configuration immutable --------------------------------------------
 ##-e 2
